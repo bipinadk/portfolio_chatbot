@@ -86,6 +86,7 @@ function App() {
   return (
     <div className="App">
       <div className='Title-Container'>
+        <div className="Title-Image"></div>
         <h1 className='Title'>
           HI! I am Bipin
         </h1>
@@ -95,29 +96,23 @@ function App() {
           <div key={index} className={message.from === 'user' ? 'user-message' : 'bot-message'}>
             {message.text}
             {message.from === 'bot' && <div style={{margin: '10px'}}/>}
-            {/* If the message is from the bot, it iterates over the message.sources array using the map function. */}
-            {/* {message.from === 'bot' && (
-              message.sources.map((source, index) => (
-                <div key={index}>
-                  Source {index + 1}:&nbsp;
-                  <a href={source} target="_blank" rel="noopener noreferrer">
-                    {source}
-                  </a>
-                </div>
-              ))
-            )} */}
           </div>
         ))}
       </div>
       <form onSubmit={handleSubmit} className="ChatInput">
         <input
           type="text"
-          placeholder="Chat with my AI 😊..."
+          placeholder="Chat with my AI 😊. Ask something about me!"
           value={userMessage}
           onChange={handleInputChange}
         />
-        <button type="submit">Send</button>
+        <button type="submit" className='sendbtn'>Send</button>
       </form>
+      {/* CV and Source buttons */}
+      <div className="ButtonContainer">
+        <a href="https://github.com/bipinadk/portfolio_chatbot" className="BottomLeftButton"><div className='img_git'></div>Source</a>
+        <a href="cv.pdf" className="BottomRightButton"><div className='img_download'></div>My CV</a>
+      </div>
     </div>
   );
 }

@@ -49,17 +49,24 @@
 .Title-Container {
   text-align: center;
   padding: 20px;
+  display:flex;
 }
 
-/* Styles for the title */
 .Title {
-  /* font-size: 2rem; */
   color: #ffffff;
   letter-spacing: 2px;
   margin-bottom: 10px;
   font-family: "Kode Mono", monospace;
 }
-
+.Title-Image {
+  background-image: url('../public/lowreg.png');
+  width: 6em; /* Adjust as needed */
+  height: 6em; /* Adjust as needed */
+  background-size: cover;
+  background-position: center;
+  margin-right: 2em;
+  margin-top: -10px;
+}
 
 .ChatInput {
   margin-top: 30px;
@@ -82,19 +89,65 @@ input {
 }
 
 button {
-  padding: 15px;
-  background-color: #094625;
   color: white;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
+}
+.sendbtn {
+  background-color: #094625;
+  padding: 15px;
+  border-radius: 4px;
 }
 
 button:hover {
   background-color: #0056b3;
 }
 
+.ButtonContainer {
+  position: fixed;
+  top: 50px;
+  width: 90%;
+  display: flex;
+  justify-content: right;
+  align-content: center;
+  padding: 0px;
+  margin: 0px;
+}
 
+.BottomLeftButton,
+.BottomRightButton {
+  position: inherit;
+  display:flex;
+  padding: 0.5em;
+  border-radius: 10px;
+  padding-right: 2em;
+  padding-top: 0.8em;
+  background-color: #24323c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+
+}
+.BottomLeftButton{
+  bottom: 30px
+}
+
+.BottomLeftButton:hover, .BottomRightButton:hover{
+  background-color: #3e6581;
+}
+.img_git, .img_download {
+  background-image: url('../public/github.png');
+  width: 2em; /* Adjust as needed */
+  height: 2em; /* Adjust as needed */
+  background-size: cover;
+  background-position: center;
+  margin-right: 1em;
+  margin-top: -0.2em;
+}
+.img_download{
+  background-image: url('../public/download.png');
+}
 /* Probably nothing  */
 /* .App-logo {
   height: 40vmin;
