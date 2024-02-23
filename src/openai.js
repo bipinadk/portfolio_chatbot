@@ -4,7 +4,7 @@ async function fetchOpenAIRequest(chatmessages) {
     // Function to get the value of an environment variable
     const getEnvValue = (name) => {
       // Check if the environment variable exists in the context environment
-      if (typeof context == 'undefined' ) {
+      if (typeof process.env !== 'undefined' ) {
         console.log('context undefined using process.env', process.env[name]);
         var context = {env: 'gg'}
         return process.env[name];
