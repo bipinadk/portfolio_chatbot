@@ -1,7 +1,7 @@
 // openaiApi.js
 
 async function fetchOpenAIRequest(chatmessages) {
-    const OPENAI_API_KEY = process.env.REACT_APP_API_KEY; // Replace 'XXX' with your actual API key
+    const OPENAI_API_KEY = REACT_APP_API_KEY; // Replace 'XXX' with your actual API key
     const convertedMessages = chatmessages.map(message => ({
       role: message.role,
       content: message.content
@@ -15,7 +15,7 @@ async function fetchOpenAIRequest(chatmessages) {
     };
     console.log('Converted Messages',convertedMessages)
     console.log(OPENAI_API_KEY);
-    
+
     try {
       const response = await fetch('https://gateway.ai.cloudflare.com/v1/731de533be6a839e17f5f08ce4b3a874/portfolio/openai/chat/completions', {
         method: 'POST',
