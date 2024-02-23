@@ -41,6 +41,18 @@ function App() {
   //useEffect to fetchData and update the messages with reply 😊
 
   useEffect(() => {
+  /////Funtion to use fetchOpenAIRequest from openai.js file////////////////////////////////////////////////////////////////
+    async function fetchData() {
+      try {
+        const responseData = await fetchOpenAIRequest(messages);
+        console.log('Response from Cloudflare API:', responseData);
+        return responseData;
+        // Process the response data as needed
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        return error;
+      }
+    }
     const fetchDataAndUpdateMessages = async () => {
       try {
         const isLastMessageFromUser = messages.length > 0 && messages[messages.length - 1].role === 'user';
@@ -56,12 +68,12 @@ function App() {
         }
       }
       catch(error){
-        console.log('Error in UseEffect fectch',error);
+        console.log('Error in UseEffect fetch',error);
       }
     };
   
     fetchDataAndUpdateMessages(); // Call the async function
-  }, [fetchData,messages]);
+  }, [messages]);
   
 
 
@@ -80,19 +92,6 @@ function App() {
 
     return () => clearTimeout(scrollTimer);
   }, [messages]);
-
-  /////Funtion to use fetchOpenAIRequest from openai.js file////////////////////////////////////////////////////////////////
-  async function fetchData() {
-    try {
-      const responseData = await fetchOpenAIRequest(messages);
-      console.log('Response from Cloudflare API:', responseData);
-      return responseData;
-      // Process the response data as needed
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      return error;
-    }
-  }
   
   return (
     <div className="App">
