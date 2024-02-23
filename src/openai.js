@@ -14,7 +14,8 @@ async function fetchOpenAIRequest(chatmessages) {
       messages: convertedMessages
     };
     console.log('Converted Messages',convertedMessages)
-  
+    console.log(OPENAI_API_KEY);
+    
     try {
       const response = await fetch('https://gateway.ai.cloudflare.com/v1/731de533be6a839e17f5f08ce4b3a874/portfolio/openai/chat/completions', {
         method: 'POST',
