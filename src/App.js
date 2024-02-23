@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
+import { fetchOpenAIRequest } from './openai.js';
+
 
 function App() {
   const [userMessage, setUserMessage] = useState('');
@@ -14,48 +16,15 @@ function App() {
     
     setUserMessage('');
     try {
-      // getting the response
-      // const response = await fetch('http://localhost:5000/chat', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     chat_history: messages,
-      //     question: userMessage,
-      //   }),
-      // });
 
-      // Simulate server response by generating a random reply from a predefined set of strings///////////////////
-      const replies = ["Hello", "random string1", "random string2", "string 3"];
-      const randomIndex = Math.floor(Math.random() * replies.length);
-      const randomReply = replies[randomIndex];
-      ///////////////////////////////////////
-
-      //parsing the response and adding the newMessages and newReply to revMessages array
-      // if (response.ok) {
-      //   const data = await response.json();
-      //   const newMessage = { from: 'user', text: userMessage };
-      //   setMessages((prevMessages) => [...prevMessages, newMessage]);// this spreads the prevMessages and adds newMessage 
-      //   const newReply = { from: 'bot', text: data.answer, sources: data.sources };
-      //   setMessages((prevMessages) => [...prevMessages, newReply]);
-       
-      // } else {
-      //   console.error('Failed to get response from server:', response.statusText);
-      // }
-
-      //new message demo//////////////////////
-      const newMessage = { from: 'user', text: userMessage };
+      //Creating new message before calling the fetch data function//////////////////////
+      console.log('UserMessage:',userMessage);
+      const newMessage = { role: 'user', content: userMessage };
       // Update messages state with new user message
       setMessages((prevMessages) => [...prevMessages, newMessage]);
-      // Construct new reply message with the random reply
-      const newReply = { from: 'bot', text: randomReply, sources: ['random source'] };
-      // Update messages state with new bot reply/////
-      setMessages((prevMessages) => [...prevMessages, newReply]);
-      ///////////////////////////////
 
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error('Error adding userMessage:', error);
     }
 
   };
@@ -69,6 +38,33 @@ function App() {
     sendMessage()
   }
 
+  //useEffect to fetchData and update the messages with reply 😊
+
+  useEffect(() => {
+    const fetchDataAndUpdateMessages = async () => {
+      try {
+        const isLastMessageFromUser = messages.length > 0 && messages[messages.length - 1].role === 'user';
+        if (isLastMessageFromUser) {
+          console.log('Last message by user and: Updated Message under useEffect',messages);
+          const reply = await fetchData();
+          const newReply = { role: 'assistant', content: reply};
+          // Update messages state with new bot reply/////
+          setMessages((prevMessages) => [...prevMessages, newReply]);
+        }
+        else{
+          console.log('last message not sent by user')
+        }
+      }
+      catch(error){
+        console.log('Error in UseEffect fectch',error);
+      }
+    };
+  
+    fetchDataAndUpdateMessages(); // Call the async function
+  }, [messages]);
+  
+
+
   // Scroll to the bottom of the chat window whenever messages change
   useEffect(() => {
     const scrollToBottom = () => {
@@ -76,6 +72,8 @@ function App() {
         chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
       }
     };
+    // printing messages for testing/////
+    console.log('useEffect messages for testing',messages);
 
     // Scroll after a delay of 0.5 seconds
     const scrollTimer = setTimeout(scrollToBottom, 0);
@@ -83,6 +81,19 @@ function App() {
     return () => clearTimeout(scrollTimer);
   }, [messages]);
 
+  /////Funtion to use fetchOpenAIRequest from openai.js file////////////////////////////////////////////////////////////////
+  async function fetchData() {
+    try {
+      const responseData = await fetchOpenAIRequest(messages);
+      console.log('Response from Cloudflare API:', responseData);
+      return responseData;
+      // Process the response data as needed
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      return error;
+    }
+  }
+  
   return (
     <div className="App">
       <div className='Title-Container'>
@@ -93,9 +104,9 @@ function App() {
       </div>
       <div className="chat-window" ref={chatWindowRef}>
         {messages.map((message, index) => (
-          <div key={index} className={message.from === 'user' ? 'user-message' : 'bot-message'}>
-            {message.text}
-            {message.from === 'bot' && <div style={{margin: '10px'}}/>}
+          <div key={index} className={message.role === 'user' ? 'user-message' : 'bot-message'}>
+            {message.content}
+            {message.role === 'assistant' && <div style={{margin: '10px'}}/>}
           </div>
         ))}
       </div>
