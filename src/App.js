@@ -61,7 +61,7 @@ function App() {
     };
   
     fetchDataAndUpdateMessages(); // Call the async function
-  }, [messages]);
+  }, [fetchData,messages]);
   
 
 
