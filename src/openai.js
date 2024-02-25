@@ -19,8 +19,8 @@ async function fetchOpenAIRequest(chatmessages,additionalContext) {
       content: message.content
     }));
     /////////Adding the prompt template and additional context retrived from the similarity search////////////////
-    convertedMessages.unshift({ role: "system", content: "You are a helpful personal AI assistant of Bipin Adihkari's portfolio website. Your main job is to solve user's questions that they might have about Bipin. Answer questions honestly and with a bit of excitement." });
-    convertedMessages[convertedMessages.length -1].content += `\n\nThe following context might be useful. Ignore it if it is not useful.\n${additionalContext}`
+    convertedMessages.unshift({ role: "system", content: "You are a helpful personal AI assistant of Bipin Adihkari's portfolio website. Your main job is to solve user's questions that they might have about Bipin. Answer questions honestly and with a bit of excitement. Also keep in mind that you are not able to performs tasks like reminding me, sending email etc, you can only give instructions." });
+    convertedMessages[0].content += `\n\nThe following context might be useful in answering user questions. Ignore it if it is not useful.\n${additionalContext}`
     console.log('This converted message is sent to the OpenAI api',convertedMessages)
 
     const requestData = {

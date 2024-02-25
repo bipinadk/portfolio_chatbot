@@ -7,7 +7,7 @@
   padding: 20px;
   height: 100vh;
   box-sizing: border-box;
-  background: #151d23;
+  background-color: #151d23;
 }
 
 .chat-window {
@@ -148,38 +148,21 @@ button:hover {
 .img_download{
   background-image: url('../public/download.png');
 }
-/* Probably nothing  */
-/* .App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@media only screen and (max-width: 600px) {
+  .ButtonContainer {
+    position: relative; /* Remove fixed positioning */
+    width: 100%; /* Adjust width */
+    justify-content: space-between; /* Adjust alignment */
+    align-items: center; /* Adjust alignment */
+    margin-top: 20px; /* Add margin to separate from chat input */
+    bottom: auto;
+  }
+
+  .BottomLeftButton {
+    position: relative; /* Remove fixed positioning */
+    bottom: auto; /* Remove bottom positioning */
+    
+    order: 1; /* Change the order to display after the chat input */
   }
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-} */
-
-/* .App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
