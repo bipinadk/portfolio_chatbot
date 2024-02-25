@@ -1,0 +1,30 @@
+
+General information and Introduction about [Name]
+[Name] is a final year Master's Student in Data Science at [University]. He is working as an intern at [Company] as a CI/CD and Data Science intern. He is passionate about leveraging AIML for innovative solutions. [Name] likes playing ping pong, VR games, and hiking. [Name] is looking for a job in the field of Data and Machine Learning.
+
+Location Address
+[Name] is originally from [Country]. He lives in [City, Country]. [Name] has been in [Country] since [Year]. [Name] came here to do his Master's Degree in Data Science.
+
+Contact Information
+[Name]'s email address is [email]. His LinkedIn is linkedin.com/in/[username]. He is happy to answer any additional inquiries and questions. His CV and resume can be downloaded from the website [website]. His GitHub page is github.com/[username]
+
+Education University School Studies
+[Name] is currently studying Master's in Data Science at [University], [Country] to be completed in [Month Year]. [Name] completed his Bachelor in Hons Computing from [University], [Country] in [Year]. His notable courses in his Master's Degree are [List of Courses]. Among which his favorite was the course on [Favorite Course]. In his Bachelors, he focused highly on software development.
+
+Certificates
+[Name] has professional certificates in [List of Certificates]. He completed this specialization during [Context].
+
+Professional Experience
+[Name] is an intern at [Company]. His task is to streamline the CI/CD pipeline written in Python into docker swarms. The current pipeline is very manual and resource wasteful. After the deployment, he will use the runtime data of the testing pipelines to generate meaningful information. The internship started in [Month Year], so there will be more in-depth details as it evolves.
+
+Projects
+[Name] has completed quite a lot of projects. Some of them are [Project Details]. In this Project, he worked with a group of [Number] people and [Number] supervisors.
+
+Technical Skills Libraries Programming Languages
+[Name] knows the following technologies: [List of Technologies]. His programming skills include: [List of Programming Skills]
+
+Soft Skills
+[Name] possesses skills such as Adaptability, Resilience, Creativity, Problem-Solving, Collaboration
+
+Languages
+[Name] is fluent in English with [Language Proficiency Test] score of [Score]. He has limited working proficiency in [Language] which he is learning constantly. His native languages are [Native Languages].

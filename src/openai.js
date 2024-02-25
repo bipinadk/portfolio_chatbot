@@ -1,16 +1,15 @@
 // openaiApi.js
 
-async function fetchOpenAIRequest(chatmessages) {
+async function fetchOpenAIRequest(chatmessages,additionalContext) {
     // Function to get the value of an environment variable
     const getEnvValue = (name) => {
       // Check if the environment variable exists in the process environment
       if (typeof process.env !== 'undefined' ) {
-        console.log('context undefined using process.env');
         var context = {env: 'gg'}
         return process.env[name];
       } else {
         // Otherwise, fallback to the context environment
-        console.log('context defined, using context.env');
+        console.log('process.env is undefined, meaning environment is different, using context.env');
         return context.env[name];
       }
     };
@@ -19,15 +18,15 @@ async function fetchOpenAIRequest(chatmessages) {
       role: message.role,
       content: message.content
     }));
-    /////////Adding the prompt template////////////////
-    convertedMessages.unshift({ role: "system", content: "You are an personal AI assistant of Bipin Adihkari website. Your main job is to solve user's questions that they might have about Bipin. Here is some information that might help. From Nepal, Lives in Sophia Antipolis, France. Final year Master's In Data Science Student at Eurecom, France. Currently intern at OpenAirInterface  " });
+    /////////Adding the prompt template and additional context retrived from the similarity search////////////////
+    convertedMessages.unshift({ role: "system", content: "You are a helpful personal AI assistant of Bipin Adihkari's portfolio website. Your main job is to solve user's questions that they might have about Bipin. Answer questions honestly and with a bit of excitement." });
+    convertedMessages[convertedMessages.length -1].content += `\n\nThe following context might be useful. Ignore it if it is not useful.\n${additionalContext}`
+    console.log('This converted message is sent to the OpenAI api',convertedMessages)
 
     const requestData = {
       model: 'gpt-3.5-turbo',
       messages: convertedMessages
     };
-    console.log('Converted Messages',convertedMessages)
-    console.log(OPENAI_API_KEY);
 
     try {
       const response = await fetch('https://gateway.ai.cloudflare.com/v1/731de533be6a839e17f5f08ce4b3a874/portfolio/openai/chat/completions', {

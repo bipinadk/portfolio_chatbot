@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 import { fetchOpenAIRequest } from './openai.js';
-
+import { getEmbedding } from './embedding.js';
+import { getSimilarity } from './pinecone.js';
 
 function App() {
   const [userMessage, setUserMessage] = useState('');
@@ -17,7 +18,6 @@ function App() {
     setUserMessage('');
     try {
 
-      //Creating new message before calling the fetch data function//////////////////////
       console.log('UserMessage:',userMessage);
       const newMessage = { role: 'user', content: userMessage };
       // Update messages state with new user message
@@ -38,16 +38,15 @@ function App() {
     sendMessage()
   }
 
-  //useEffect to fetchData and update the messages with reply 😊
-
+  //This useEffect checks for updates in messages, if the last update user usermessage
+  //it sends it for embedding, send for similarity search and finally sends it to the llm 😊
   useEffect(() => {
-  /////Funtion to use fetchOpenAIRequest from openai.js file////////////////////////////////////////////////////////////////
-    async function fetchData() {
+  /////Funtion to use fetchOpenAIRequest from openai.js file
+    async function fetchData(similarity) {
       try {
-        const responseData = await fetchOpenAIRequest(messages);
-        console.log('Response from Cloudflare API:', responseData);
+        const responseData = await fetchOpenAIRequest(messages,similarity);
+        console.log('Parsed response from OpenAI:', responseData);
         return responseData;
-        // Process the response data as needed
       } catch (error) {
         console.error('Error fetching data:', error);
         return error;
@@ -55,10 +54,17 @@ function App() {
     }
     const fetchDataAndUpdateMessages = async () => {
       try {
+        //checking if last message was from user
         const isLastMessageFromUser = messages.length > 0 && messages[messages.length - 1].role === 'user';
         if (isLastMessageFromUser) {
-          console.log('Last message by user and: Updated Message under useEffect',messages);
-          const reply = await fetchData();
+          //genetrate embedding
+          const embedding = await getEmbedding(messages[messages.length - 1].content);
+          console.log('recieved embeddings',embedding);
+          //get similarity from embedding
+          const similarity = await getSimilarity(embedding);
+          console.log('Retrieved similarity documents',similarity);
+          //sending the text recieved to llm
+          const reply = await fetchData(similarity);
           const newReply = { role: 'assistant', content: reply};
           // Update messages state with new bot reply/////
           setMessages((prevMessages) => [...prevMessages, newReply]);
@@ -72,10 +78,9 @@ function App() {
       }
     };
   
-    fetchDataAndUpdateMessages(); // Call the async function
+    fetchDataAndUpdateMessages(); //Note we are calling the funtions defined about everytime message is updated
   }, [messages]);
   
-
 
   // Scroll to the bottom of the chat window whenever messages change
   useEffect(() => {
@@ -84,10 +89,7 @@ function App() {
         chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
       }
     };
-    // printing messages for testing/////
-    console.log('useEffect messages for testing',messages);
-
-    // Scroll after a delay of 0.5 seconds
+    // Scroll after a delay of 0 seconds
     const scrollTimer = setTimeout(scrollToBottom, 0);
 
     return () => clearTimeout(scrollTimer);
