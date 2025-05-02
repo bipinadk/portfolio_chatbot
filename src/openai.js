@@ -14,6 +14,8 @@ async function fetchOpenAIRequest(chatmessages,additionalContext) {
       }
     };
     const OPENAI_API_KEY = getEnvValue('REACT_APP_API_KEY');
+    const LLM_gatewayURL = getEnvValue('REACT_APP_GATEWAY_URL');
+    const LLM_model = getEnvValue('REACT_APP_MODEL');
     const convertedMessages = chatmessages.map(message => ({
       role: message.role,
       content: message.content
@@ -24,12 +26,12 @@ async function fetchOpenAIRequest(chatmessages,additionalContext) {
     console.log('This converted message is sent to the OpenAI api',convertedMessages)
 
     const requestData = {
-      model: 'gpt-3.5-turbo',
+      model: LLM_model,
       messages: convertedMessages
     };
 
     try {
-      const response = await fetch('https://gateway.ai.cloudflare.com/v1/731de533be6a839e17f5f08ce4b3a874/portfolio/openai/chat/completions', {
+      const response = await fetch(LLM_gatewayURL, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${OPENAI_API_KEY}`,

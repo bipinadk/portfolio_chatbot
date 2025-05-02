@@ -106,7 +106,9 @@ function App() {
       <div className="chat-window" ref={chatWindowRef}>
         {messages.map((message, index) => (
           <div key={index} className={message.role === 'user' ? 'user-message' : 'bot-message'}>
-            {message.content}
+            <pre style={{ whiteSpace: 'pre-wrap', font: 'inherit' }}>
+              {message.content}
+            </pre>
             {message.role === 'assistant' && <div style={{margin: '10px'}}/>}
           </div>
         ))}
